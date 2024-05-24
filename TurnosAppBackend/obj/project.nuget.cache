@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "xdp5zIS5ZLwDpJfH0EsiZ6E+1Kz5ApU9yaQSsqigrJxPoKztPdz/D2B2e4199JTZ5hMQXsFMsPWakZIokj3RWA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\fedec\\OneDrive\\Escritorio\\proyectos\\TurnosAppBackend\\TurnosAppBackend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\fedec\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\fedec\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\fedec\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\fedec\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\fedec\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\fedec\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

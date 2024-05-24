@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "gixHzJ1wuBmLcHa+vsBBD578EY/P8GdTsFFY7Nj4BJ0=",
+  "Source": "TurnosAppBackend",
+  "BasePath": "_content/TurnosAppBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
