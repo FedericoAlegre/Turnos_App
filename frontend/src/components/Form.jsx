@@ -8,7 +8,7 @@ const Form = () => {
     setSelectedTime(event.target.value);
   };
 
-  const times = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+  const times = ['09:00', '10:00', '11:00', '12:00', '13:00'];
 
   return (
     <div className='flex flex-col gap-5 bg-dark-blue text-white py-12 px-32 w-1/2 rounded-2xl shadow-lg shadow-black'>
@@ -37,21 +37,24 @@ const Form = () => {
           <label>Seleccione Horario</label>
           <div className="flex flex-wrap gap-2">
             {times.map((time) => (
-              <label key={time} className="flex items-center">
+              <label
+                key={time}
+                className={`flex items-center border border-white py-2 px-6 rounded-lg transition-colors ${selectedTime === time ? 'bg-orange text-black' : ''}`}
+              >
                 <input
                   type="radio"
                   name="time"
                   value={time}
                   checked={selectedTime === time}
                   onChange={handleTimeChange}
-                  className="mr-2"
+                  className="hidden"
                 />
                 {time}
               </label>
             ))}
           </div>
         </div>
-        <button href={'/turnos'} className='bg-orange text-black font-bold py-2 px-6 rounded-lg shadow shadow-black'>Agendar Turno</button>
+        <button className='bg-orange text-black font-bold py-2 px-6 rounded-lg shadow shadow-black'>Agendar Turno</button>
 
       </form>
     </div>
