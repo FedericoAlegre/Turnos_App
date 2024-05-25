@@ -8,7 +8,7 @@ const Turnos = () => {
     <div className='flex justify-center items-center h-screen'>
       <Background />
       <Form />
-      <ToastContainer position='top-center' />
+      <ToastContainer />
     </div>
   )
 }
