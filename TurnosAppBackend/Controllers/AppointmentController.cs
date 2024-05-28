@@ -37,6 +37,11 @@ namespace TurnosAppBackend.Controllers
             try
             {
                 list = await this.AppDbContext.Appointments.ToListAsync();
+                foreach (Appointment item in list)
+                {
+                    item.Client = this.AppDbContext.Clients.FirstOrDefault(x => x.Id == item.ClientId);
+                    item.Client!.Appointments = null;
+                }
 
                 return Ok(list);
             }
