@@ -58,7 +58,7 @@ namespace TurnosAppBackend.Controllers
                 if (!await CheckDate(model.Date, model.Hour!)) return StatusCode(StatusCodes.Status200OK, new { message = "Appointment not available" });
 
                 var dbClient = this.AppDbContext.Clients.FirstOrDefaultAsync(x => x.Phone!.Equals(model.Client.Phone));
-                if (dbClient != null)
+                if (dbClient.Result != null)
                 {
                     model.Client = null;
                     model.ClientId = dbClient.Result!.Id;
