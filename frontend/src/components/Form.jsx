@@ -1,38 +1,63 @@
 'use client'
+import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const Form = () => {
   const [data, setData] = useState({
-    fullName: '',
-    phone: '',
+    client: {
+      name: '',
+      phone: ''
+    },
     date: '',
-    branch: 'Peña',
-    time: ''
+    hour: ''
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setData({ ...data, [name]: value });
+    
+    if (name === 'name' || name === 'phone') {
+      setData(prevData => ({
+        ...prevData,
+        client: {
+          ...prevData.client,
+          [name]: value
+        }
+      }));
+    } else {
+      setData(prevData => ({
+        ...prevData,
+        [name]: value
+      }));
+    }
   };
 
   const handleTimeChange = (event) => {
-    setData({ ...data, time: event.target.value });
+    setData(prevData => ({
+      ...prevData,
+      hour: event.target.value
+    }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes hacer una llamada a una API para enviar los datos
-    console.log('Datos del formulario:', data);
-    toast.success(
-      <div>
-        <strong>Turno agendado:</strong><br />
-        <strong>Nombre:</strong> {data.fullName}<br />
-        <strong>Fecha:</strong> {data.date}<br />
-        <strong>Sucursal:</strong> {data.branch}<br />
-        <strong>Hora:</strong> {data.time}
-      </div>
-    );
+    
+    axios.post('https://localhost:7092/api/Appointment', data)
+      .then(response => {
+        console.log(response.data);
+        toast.success(
+          <div>
+            <strong>Turno agendado:</strong><br />
+            <strong>Nombre:</strong> {data.client.name}<br />
+            <strong>Fecha:</strong> {data.date}<br />
+            <strong>Hora:</strong> {data.hour}
+          </div>
+        );
+      })
+      .catch(error => {
+        console.error(error);
+        toast.error('Hubo un error al agendar el turno.');
+      });
   };
 
   const times = ['09:00', '10:00', '11:00', '12:00', '13:00'];
@@ -46,21 +71,21 @@ const Form = () => {
           <label>Nombre Completo</label>
           <input
             type='text'
-            name='fullName'
+            name='name'
             placeholder='Ej: Juan Perez'
-            value={data.fullName}
+            value={data.client.name}
             onChange={handleChange}
             className="py-2 px-4 rounded-lg text-black"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Telefono</label>
+          <label>Teléfono</label>
           <input
             type='text'
             name='phone'
             placeholder='Ej: 2231111111'
-            value={data.phone}
+            value={data.client.phone}
             onChange={handleChange}
             className="py-2 px-4 rounded-lg text-black"
           />
@@ -78,39 +103,27 @@ const Form = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Seleccione Sucursal</label>
-          <select
-            name='branch'
-            value={data.branch}
-            onChange={handleChange}
-            className="py-2 px-4 rounded-lg text-black"
-          >
-            <option>Peña</option>
-            <option>Falucho</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col gap-2">
           <label>Seleccione Horario</label>
           <div className="flex flex-wrap gap-2">
-            {times.map((time) => (
+            {times.map((hour) => (
               <label
-                key={time}
-                className={`flex items-center border border-white py-2 px-6 rounded-lg transition-colors ${data.time === time ? 'bg-orange text-black' : ''}`}
+                key={hour}
+                className={`flex items-center border border-white py-2 px-6 rounded-lg transition-colors ${data.hour === hour ? 'bg-orange text-black' : ''}`}
               >
                 <input
                   type="radio"
-                  name="time"
-                  value={time}
-                  checked={data.time === time}
+                  name="hour"
+                  value={hour}
+                  checked={data.hour === hour}
                   onChange={handleTimeChange}
                   className="hidden"
                 />
-                {time}
+                {hour}
               </label>
             ))}
           </div>
         </div>
+
         <button type='submit' className='bg-orange text-black font-bold py-2 px-6 rounded-lg shadow shadow-black'>Agendar Turno</button>
 
       </form>

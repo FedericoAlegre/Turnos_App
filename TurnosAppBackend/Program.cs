@@ -10,7 +10,16 @@ using TurnosAppBackend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 //Auth
 
@@ -46,7 +55,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection String not found"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Santi") ?? throw new InvalidOperationException("Connection String not found"));
 });
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
@@ -65,6 +74,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

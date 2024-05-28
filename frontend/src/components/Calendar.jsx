@@ -5,6 +5,9 @@ import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
 export default function Calendar() {
+
+  
+
   return (
     <div className="container mx-auto p-10">
       <FullCalendar
