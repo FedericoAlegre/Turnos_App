@@ -1,27 +1,37 @@
-'use client'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import timeGridPlugin from '@fullcalendar/timegrid'
+'use client';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 export default function Calendar() {
+  const [events, setEvents] = useState([]);
 
-  
+  useEffect(() => {
+    axios.get('https://localhost:7092/api/Appointment')
+      .then(response => {
+        const appointments = response.data.map(appointment => ({
+          title: `${appointment.client.name} - ${appointment.client.phone}`,
+          start: appointment.date + 'T' + appointment.hour,
+          end: appointment.date + 'T' + (parseInt(appointment.hour.split(':')[0]) + 1).toString().padStart(2, '0') + ':' + appointment.hour.split(':')[1]
+        }));
+        setEvents(appointments);
+      })
+      .catch(error => console.error('Error fetching appointments:', error));
+  }, []);
 
   return (
-    <div className="container mx-auto p-10">
+    <div className="container mx-auto p-4 md:p-10 mb-20">
       <FullCalendar
-        plugins={[
-          dayGridPlugin,
-          interactionPlugin,
-          timeGridPlugin
-        ]}
+        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
           right: 'timeGridDay,timeGridWeek,dayGridMonth'
         }}
-        initialView='timeGridWeek'
+        initialView='timeGridDay'
         nowIndicator={true}
         editable={true}
         droppable={true}
@@ -30,21 +40,11 @@ export default function Calendar() {
         allDaySlot={false}
         slotMinTime="08:00:00"
         slotMaxTime="18:00:00"
-        events={[
-          { title: 'Turno 1', start: '2024-05-27T09:00:00', end: '2024-05-27T10:00:00' },
-          { title: 'Turno 2', start: '2024-05-27T11:00:00', end: '2024-05-27T12:00:00' },
-          { title: 'Turno 3', start: '2024-05-27T14:00:00', end: '2024-05-27T15:00:00' },
-          { title: 'Turno 4', start: '2024-05-27T16:00:00', end: '2024-05-27T17:00:00' },
-          { title: 'Turno 5', start: '2024-05-27T09:00:00', end: '2024-05-27T10:00:00' },
-          { title: 'Turno 6', start: '2024-05-27T11:00:00', end: '2024-05-27T12:00:00' },
-          { title: 'Turno 7', start: '2024-05-27T14:00:00', end: '2024-05-27T15:00:00' },
-          { title: 'Turno 8', start: '2024-05-27T16:00:00', end: '2024-05-27T17:00:00' },
-          { title: 'Turno 9', start: '2024-05-27T09:00:00', end: '2024-05-27T10:00:00' },
-          { title: 'Turno 10', start: '2024-05-27T11:00:00', end: '2024-05-27T12:00:00' }
-        ]}
+        events={events}
         locale='es'
         height="auto"
+        contentHeight='auto'
       />
     </div>
-  )
+  );
 }

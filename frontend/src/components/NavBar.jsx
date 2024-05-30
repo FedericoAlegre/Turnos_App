@@ -4,7 +4,7 @@ import logo from '../../public/mareatech.png';
 
 const NavBar = () => {
   return (
-    <div className='flex justify-between items-center fixed w-full bg-dark-blue text-white p-4 shadow-md shadow-black'>
+    <div className='md:flex hidden justify-between items-center fixed w-full bg-dark-blue text-white p-4 shadow-md shadow-black'>
       <div className='flex items-center gap-12'>
         <Link href='/' className='md:w-1/6 w-1/2'>
           <Image src={logo} alt='Marea Tech'/>

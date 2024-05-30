@@ -4,7 +4,7 @@ import Table from "@/components/Table";
 const Turnos = () => {
 
   return (
-    <div className="flex">
+    <div className="flex flex-col-reverse md:flex-row">
       <SideBar />
       <Table />
     </div>

@@ -4,7 +4,7 @@ import SideBar from "@/components/SideBar";
 const Calendario = () => {
 
   return (
-    <div className="flex">
+    <div className="flex flex-col-reverse md:flex-row">
       <SideBar />
       <Calendar />
     </div>
