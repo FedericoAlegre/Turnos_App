@@ -14,18 +14,13 @@ namespace TurnosAppBackend.Controllers
     [ApiController]
     public class AppointmentController : ControllerBase
     {
-        //private readonly JsonSerializerOptions _jsonOptions;
         public AppDbContext AppDbContext { get; set; }
         public ClientController ClientController { get; set; }
         public AppointmentController(AppDbContext appDbContext)
         {
             this.AppDbContext = appDbContext;
             this.ClientController = new ClientController(appDbContext);
-            /*this._jsonOptions = new JsonSerializerOptions
-            {
-                Converters = { new DateOnlyJsonConverter() },
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };*/
+            
         }
 
         [HttpGet]
@@ -39,8 +34,10 @@ namespace TurnosAppBackend.Controllers
                 list = await this.AppDbContext.Appointments.ToListAsync();
                 foreach (Appointment item in list)
                 {
-                    item.Client = this.AppDbContext.Clients.FirstOrDefault(x => x.Id == item.ClientId);
+                    item.Client = await this.AppDbContext.Clients.FindAsync(item.ClientId);
                     item.Client!.Appointments = null;
+                    item.Service = await this.AppDbContext.Services.FindAsync(item.ServiceId);
+                    item.Service!.Appointments = null;
                 }
 
                 return Ok(list);
@@ -60,6 +57,7 @@ namespace TurnosAppBackend.Controllers
             {
                 if (model == null) return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Appointment was null" });
                 if (model.Client == null) return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Client was null" });
+                if (model.ServiceId == 0 ) return StatusCode(StatusCodes.Status500InternalServerError, new { message = "ServiceId was null" });
                 if (!await CheckDate(model.Date, model.Hour!)) return StatusCode(StatusCodes.Status200OK, new { message = "Appointment not available" });
 
                 var dbClient = this.AppDbContext.Clients.FirstOrDefaultAsync(x => x.Phone!.Equals(model.Client.Phone));
@@ -74,7 +72,7 @@ namespace TurnosAppBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -126,7 +124,7 @@ namespace TurnosAppBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
