@@ -42,7 +42,7 @@ namespace TurnosAppBackend.Controllers
                         var tokenDescriptor = new SecurityTokenDescriptor
                         {
                             Subject = claims,
-                            Expires = DateTime.UtcNow.AddMinutes(10),
+                            Expires = DateTime.UtcNow.AddMinutes(30),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
                         };
                         var tokenHandler = new JwtSecurityTokenHandler();
@@ -79,6 +79,7 @@ namespace TurnosAppBackend.Controllers
                 if (user != null)
                 {
                     user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
+                    user.FechaCreacion = DateTime.Now;
                     this._context.Users.Add(user);
                     this._context.SaveChanges();
                 }
@@ -88,7 +89,7 @@ namespace TurnosAppBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
     }

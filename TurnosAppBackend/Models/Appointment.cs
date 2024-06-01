@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TurnosAppBackend.Models
 {
@@ -11,7 +12,13 @@ namespace TurnosAppBackend.Models
         public string? Hour { get; set; }
         public Client? Client { get; set; }
         [Required]
-        public int ClientId {  get; set; }
+        public int? ClientId {  get; set; }
+        public Service? Service { get; set; }
+        [Required]
+        public int ServiceId { get; set; }
+        
+        public double? TotalPrice { get; set; }
+        public bool? IsPaid { get; set; }
 
 
     }
