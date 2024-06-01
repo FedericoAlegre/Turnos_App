@@ -10,7 +10,7 @@ export default function Calendar() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    axios.get('https://localhost:7092/api/Appointment')
+    axios.get('http://localhost:5139/api/Appointment')
       .then(response => {
         const appointments = response.data.map(appointment => ({
           title: `${appointment.client.name} - ${appointment.client.phone}`,

@@ -11,7 +11,7 @@ const DashboardComponent = () => {
   const [topClients, setTopClients] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:7092/api/Appointment')
+    axios.get('http://localhost:5139/api/Appointment')
       .then(response => {
         const data = response.data;
 
@@ -78,33 +78,43 @@ const DashboardComponent = () => {
     <div className="w-full mx-auto p-4 sm:p-6 md:p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white shadow-md rounded p-4">
-          <h2 className="text-lg font-bold">Resumen de Turnos</h2>
-          <p>Total de Turnos del Día: {summary.dailyAppointments}</p>
-          <p>Total de Turnos de la Semana: {summary.weeklyAppointments}</p>
-          <p>Total de Clientes Únicos: {summary.uniqueClients}</p>
+          <h2 className="text-lg font-bold mb-2">Resumen de Turnos</h2>
+          <div className="space-y-1">
+            <p><span className="font-semibold">Turnos del Día:</span> {summary.dailyAppointments}</p>
+            <p><span className="font-semibold">Turnos de la Semana:</span> {summary.weeklyAppointments}</p>
+            <p><span className="font-semibold">Clientes Únicos:</span> {summary.uniqueClients}</p>
+          </div>
         </div>
         <div className="bg-white shadow-md rounded p-4">
-          <h2 className="text-lg font-bold">Próximos Turnos</h2>
-          <ul>
+          <h2 className="text-lg font-bold mb-2">Próximos Turnos</h2>
+          <ul className="space-y-2">
             {upcomingAppointments.map((appointment, index) => (
-              <li key={index}>
-                {appointment.client.name} - {appointment.client.phone} - {appointment.date} {appointment.hour}
+              <li key={index} className="flex justify-between">
+                <div className="flex-1">
+                  <p className="font-semibold">{appointment.client.name}</p>
+                  <p className="text-sm text-gray-600">{appointment.client.phone}</p>
+                </div>
+                <div className="flex-1 text-right">
+                  <p className="font-semibold">{new Date(appointment.date).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-600">{appointment.hour}</p>
+                </div>
               </li>
             ))}
           </ul>
         </div>
         <div className="bg-white shadow-md rounded p-4 col-span-1 md:col-span-2">
-          <h2 className="text-lg font-bold">Turnos por Día</h2>
+          <h2 className="text-lg font-bold mb-2">Turnos por Día</h2>
           <div className="overflow-x-auto">
             <Bar data={appointmentsPerDayData} />
           </div>
         </div>
-        <div className="bg-white shadow-md rounded p-4 col-span-1 md:col-span-2">
-          <h2 className="text-lg font-bold">Clientes Más Frecuentes</h2>
-          <ul>
+        <div className="bg-white shadow-md rounded p-4 col-span-1 md:col-span-2 mb-12">
+          <h2 className="text-lg font-bold mb-2">Clientes Más Frecuentes</h2>
+          <ul className="space-y-1">
             {topClients.map((client, index) => (
-              <li key={index}>
-                {client.name} - {client.count} turnos
+              <li key={index} className="flex justify-between">
+                <span className="font-semibold">{client.name}</span>
+                <span>{client.count} turnos</span>
               </li>
             ))}
           </ul>
