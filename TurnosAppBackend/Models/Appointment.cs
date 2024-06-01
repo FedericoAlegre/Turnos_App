@@ -11,9 +11,9 @@ namespace TurnosAppBackend.Models
         [Required]
         public string? Hour { get; set; }
         public Client? Client { get; set; }
-        [Required]
         public int? ClientId {  get; set; }
         public Service? Service { get; set; }
+        
         [Required]
         public int ServiceId { get; set; }
         
