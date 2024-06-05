@@ -15,6 +15,7 @@ namespace TurnosAppBackend.Controllers
         public AppDbContext AppDbContext { get; set; } = appDbContext;
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> GetList()
         {
             List<Service> list = new List<Service>();
