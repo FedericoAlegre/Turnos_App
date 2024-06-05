@@ -1,25 +1,25 @@
 'use client';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { getFormattedAppointments } from '@/api/calendarHandlers';
 
 export default function Calendar() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5139/api/Appointment')
-      .then(response => {
-        const appointments = response.data.map(appointment => ({
-          title: `${appointment.client.name} - ${appointment.client.phone}`,
-          start: appointment.date + 'T' + appointment.hour,
-          end: appointment.date + 'T' + (parseInt(appointment.hour.split(':')[0]) + 1).toString().padStart(2, '0') + ':' + appointment.hour.split(':')[1]
-        }));
-        setEvents(appointments);
-      })
-      .catch(error => console.error('Error fetching appointments:', error));
+    const fetchEvents = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const formattedAppointments = await getFormattedAppointments(token);
+        setEvents(formattedAppointments);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchEvents();
   }, []);
 
   return (
