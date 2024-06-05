@@ -77,7 +77,6 @@ namespace TurnosAppBackend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [Route("update")]
         public async Task<ActionResult> Update([FromBody] Service model)
         {
