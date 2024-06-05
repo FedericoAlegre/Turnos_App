@@ -25,7 +25,7 @@ export const handleSubmit = (event, data, setErrors, setData) => {
     return;
   }
 
-  createService(data)
+  createService(data, localStorage.getItem('authToken'))
     .then(response => {
       setErrors({});
       setData({ name: '', price: '', isActive: true });

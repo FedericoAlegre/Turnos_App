@@ -68,9 +68,11 @@ export const createAppointment = async (data) => {
   }
 };
 
-export const createService = async (data) => {
+export const createService = async (data, token) => {
   try {
-    const response = await axios.post(`${API_URL}/Service`, data);
+    const response = await axios.post(`${API_URL}/Service/`, data, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error('Error creating service:', error);
