@@ -1,4 +1,4 @@
-@TurnosAppBackend_HostAddress = http://localhost:5139
+@TurnosAppBackend_HostAddress = https://turnosappbackend.azurewebsites.net
 
 
 
