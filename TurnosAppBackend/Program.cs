@@ -55,7 +55,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Santi") ?? throw new InvalidOperationException("Connection String not found"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection String not found"));
 });
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
