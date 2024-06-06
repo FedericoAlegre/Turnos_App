@@ -21,11 +21,11 @@ jobs:
         with:
           dotnet-version: '8.x'
           include-prerelease: true
-      - name: Change to project directory
-        run: cd D:\a\Turnos_App\Turnos_App\TurnosAppBackend
+      
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release TurnosAppBackend.sln
+        run: cd D:\a\Turnos_App\Turnos_App\TurnosAppBackend
+          dotnet build --configuration Release TurnosAppBackend.csproj
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
