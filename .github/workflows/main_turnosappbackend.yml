@@ -25,7 +25,7 @@ jobs:
         run: cd D:\a\Turnos_App\Turnos_App\TurnosAppBackend
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release TurnosAppBackend.csproj
+        run: dotnet build --configuration Release TurnosAppBackend.sln
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
