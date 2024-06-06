@@ -22,7 +22,7 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
       - name: Change to project directory
-        run: cd C:\Users\fedec\OneDrive\Escritorio\proyectos\Turnos_App\TurnosAppBackend
+        run: cd Turnos_App\TurnosAppBackend
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
